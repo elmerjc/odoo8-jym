@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="action_invoice_2015_tree" model="ir.actions.act_window">
+            <field name="name">Facturas 2015</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), '&amp;',('date_invoice','&lt;=', time.strftime('2015-12-31')),('date_invoice','&gt;=',time.strftime('2015-01-01'))]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas del año 2015
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_invoice_2015_tree" id="menu_action_invoice_2015_tree" parent="account.menu_finance_receivables"/>
+
+        <record id="action_invoice_2016_tree" model="ir.actions.act_window">
+            <field name="name">Facturas 2016</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), '&amp;',('date_invoice','&lt;=', time.strftime('2016-12-31')),('date_invoice','&gt;=',time.strftime('2016-01-01'))]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas del año 2016
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_invoice_2016_tree" id="menu_action_invoice_2016_tree" parent="account.menu_finance_receivables"/>
+
+        <record id="action_invoice_anuladas_tree" model="ir.actions.act_window">
+            <field name="name">Facturas Anuladas</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="domain">[('type','=','out_invoice'), ('state','=','cancel')]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas anuladas
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_invoice_anuladas_tree" id="menu_action_invoice_anuladas_tree" parent="account.menu_finance_receivables"/>
+    </data>
+</openerp>

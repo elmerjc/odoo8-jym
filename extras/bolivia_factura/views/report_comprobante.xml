@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="report_comprobante">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.bolivia_layout">
+                    <div class="page" style="font-size:17px; font-weight:normal;">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-5">
+                                   <span style="padding-left:110px;" t-field="o.date_invoice" t-field-options='{"format": "d "}'/>
+                                   <span style="padding-left:50px;" t-field="o.date_invoice" t-field-options='{"format": "M"}'/>
+                                   <span style="padding-left:50px;" t-field="o.date_invoice" t-field-options='{"format": "y"}'/>
+                                </div>
+                                <div class="col-xs-7">
+                                   <span style="padding-left:30px;" t-field="o.partner_id.x_ruc"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div style="height:15px;"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10">
+                                   <span style="padding-left:95px;" t-field="o.partner_id"/>
+                                </div>
+                                <div class="col-xs-2">
+                                   <span style="font-size: 16px;" t-field="o.number"/>
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="row">
+                           <div style="height:20px;"></div>
+                        </div>
+
+						<div class="oe_structure"/>
+
+                        <table class="table" style="margin:0px; border:0px; font-weight:normal;">
+                            <thead  style="border: 0px;">
+                                <tr style="border: 0px;">
+                                    <th style="border: 0px;"></th>
+                                    <th style="border: 0px;"></th>
+                                    <th style="border: 0px;"></th>
+                                    <th style="border: 0px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody" style="border: 0px;">
+                                <tr t-foreach="o.invoice_line" t-as="l" style="border: 0px;">
+                                    <td style="border: 0px;padding:0px 0px 6px 0px;margin:0px;">
+                                        <span style="padding-left:22px;" t-field="l.quantity"/>
+                                    </td>
+                                    <td style="border: 0px;padding:0px;margin:0px;">
+                                         <span style="padding-left:60px;" t-field="l.product_id.name"/><span style="padding-left:20px;" t-esc="' '"/>
+                                    </td>
+                                    <td class="text-right" style="border: 0px;padding:0px;margin:0px;">
+                                        <span style="padding-left:85px;" t-field="l.price_unit_real"/>
+                                    </td>
+                                    <td class="text-right" style="border: 0px;padding:0px;margin:0px;">
+                                        <span style="padding-left:20px;" t-field="l.price_subtotal_real"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

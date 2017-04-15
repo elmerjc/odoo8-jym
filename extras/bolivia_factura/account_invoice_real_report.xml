@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="action_report_comprobante"
+            string="Imprimir Comprobante"
+            model="account.invoice.real" 
+            report_type="qweb-pdf"
+            file="bolivia_factura.report_comprobante" 
+            name="bolivia_factura.report_comprobante" 
+        />
+    </data>
+</openerp>

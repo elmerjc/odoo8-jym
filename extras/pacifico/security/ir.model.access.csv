@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wizard_report_sale_invoice_user,wizard_report_sale_invoice user,model_wizard_report_sale_invoice,group_name_pacifico_user,1,1,0,0
+access_wizard_report_sale_invoice_manager,wizard_report_sale_invoice manager,model_wizard_report_sale_invoice,group_name_pacifico_manager,1,1,1,1
+access_report_sale_invoice_user,report_sale_invoice user,model_report_sale_invoice,group_name_pacifico_user,1,1,0,0
+access_report_sale_invoice_manager,report_sale_invoice manager,model_report_sale_invoice,group_name_pacifico_manager,1,1,1,1

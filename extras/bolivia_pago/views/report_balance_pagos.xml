@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="bolivia_pago.report_balance_pagos" name="Reporte de balance de pagos">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.bolivia_pago_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h2 class="text-center">
+                            <span>REPORTE DE BALANCE DE PAGOS</span>
+                        </h2>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th colspan="18" style="height:40px;"></th>
+                                </tr>
+                                <tr>
+                                    <td class="vertical-text">CLIENTE</td>
+                                    <td class="vertical-text">PEDIDO</td>
+                                    <td class="vertical-text">DEBE</td>
+                                    <td class="vertical-text">HABER</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="sum_debe" t-value="0"/>
+                                <t t-set="sum_haber" t-value="0"/>
+                                <t t-foreach="get_data_balance_pagos()" t-as="data">
+                                    <t t-set="sum_debe" t-value="sum_debe + data['debe']"/>
+                                    <t t-set="sum_haber" t-value="sum_haber + data['haber']"/>
+                                    <tr>
+                                        <td><span t-esc="data['cliente']"/></td>
+                                        <td><span t-esc="data['pedido']"/></td>
+                                        <td><span t-esc="data['debe']"/></td>
+                                        <td><span t-esc="data['haber']"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td><t t-esc="sum_debe"/></td>
+                                        <td><t t-esc="sum_haber"/></td>
+                                    </tr>
+                            </tfooter>
+                        </table>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

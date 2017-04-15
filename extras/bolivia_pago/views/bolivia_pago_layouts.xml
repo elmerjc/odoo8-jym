@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+  <template id="report.bolivia_pago_layout">
+      <t t-call="report.bolivia_pago_layout_header"/>
+      <t t-raw="0"/>
+      <t t-call="report.bolivia_pago_layout_footer"/>
+  </template>
+
+  <template id="report.bolivia_pago_layout_header">
+      <div class="header">
+        <div class="row text-left">
+          <div class="col-xs-6">
+           <!--<img height="120px" src="/andina_industrial/static/src/img/logo.png"/>-->
+          </div>
+        </div>
+        <!--<div style="margin:10px 0;border-top: 1px solid black;"/>-->
+      </div>
+  </template>
+
+  <template id="report.bolivia_pago_layout_footer">
+      <div class="footer">
+        <div class="row text-center">
+            <div class="col-xs-12">
+              
+            </div>
+        </div>
+      </div>
+  </template>
+</data>
+</openerp>

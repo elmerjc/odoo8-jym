@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record id="bolivia_pago_invoice_view" model="ir.ui.view">
+        <field name="name">sale.order.pago</field>
+        <field name="model">sale.order</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//page[@string='Order Lines']" position="after">
+                    <page string="Pagos">
+                        <field name="pagos_ids" nolabel="1">
+                            <tree string="Pagos" editable="bottom">
+                                <field name="sale_id" invisible="1"/>
+                                <field name="date"/>
+                                <field name="metodo"/>
+                                <field name="name"/>
+                                <field name="sale_total" invisible="1"/>
+                                <field name="amount" on_change="check_pago_change(parent.name, parent.partner_id, amount, sale_total, context)"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_nit']" position="after">
+                    <field name="partner_amount_positive"/>
+                </xpath>   
+            </data>
+        </field>
+    </record>
+
+    <record id="view_bolivia_pago_select" model="ir.ui.view">
+        <field name="name">bolivia.pago.select</field>
+        <field name="model">bolivia.pago</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Pagos">
+                <field name="date" string="Pagos" filter_domain="[('date','ilike',self)]"/>
+                <separator/>
+                <field name="partner_id" operator="child_of"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Cliente" name="group_by_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Pedido de venta" name="group_by_sale_name" context="{'group_by':'sale_name'}"/>
+                    <filter string="Metodo" name="group_by_metodo" context="{'group_by':'metodo'}"/>
+                    <filter string="Fecha" name="group_by_date" context="{'group_by':'date:day'}"/>
+                </group>
+           </search>
+        </field>
+      </record>
+
+      <record id="view_bolivia_pago_graph" model="ir.ui.view">
+        <field name="name">bolivia.pago.graph</field>
+        <field name="model">bolivia.pago</field>
+        <field name="arch" type="xml">
+            <graph string="Pagos" type="bar">
+                <field name="partner_id"/>
+                <field name="amount" operator="+"/>
+            </graph>
+        </field>
+      </record>
+
+      <record id="view_bolivia_pago_tree" model="ir.ui.view">
+        <field name="name">bolivia.pago.tree</field>
+        <field name="model">bolivia.pago</field>
+        <field name="arch" type="xml">
+            <tree string="Pagos">
+                <field name="partner_id" groups="base.group_user"/>
+                <field name="sale_name"/>
+                <field name="date"/>
+                <field name="metodo"/>
+                <field name="name"/>
+                <field name="amount" sum="Total sin impuesto"/>
+            </tree>
+        </field>
+      </record>
+		
+	  <menuitem id="menu_bolivia_pagos_view"  name="Pagos" parent="base.menu_base_partner"/>
+	  	
+      <record id="listar_bolivia_pagos" model="ir.actions.act_window">
+        <field name="name">Pagos</field>
+        <field name="res_model">bolivia.pago</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="search_view_id" ref="view_bolivia_pago_select"/>
+      </record>
+
+      <menuitem id="bolivia_pagos_action"  name="Pagos" parent="menu_bolivia_pagos_view" action="listar_bolivia_pagos" />
+
+
+    </data>
+</openerp>

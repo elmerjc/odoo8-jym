@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="action_report_balance_pagos_wizard"
+            string="Reporte Balance de pagos"
+            model="wizard.report.balance.pagos"
+            report_type = "qweb-pdf"
+            file="bolivia_pago.report_balance_pagos"
+            name="bolivia_pago.report_balance_pagos"
+            menu="False"
+        />
+
+        <record id="bolivia_pago.action_report_balance_pagos_wizard" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report.paperformat_euro" />
+        </record>
+
+    </data>
+</openerp>

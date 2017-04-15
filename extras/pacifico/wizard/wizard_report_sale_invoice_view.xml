@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_report_sale_invoice" model="ir.ui.view">
+            <field name="name">Análisis de facturas de venta</field>
+            <field name="model">wizard.report.sale.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Elegir el rango de fecha">
+                    <p class="oe_gray">
+                        Elegir el rango de fecha
+                    </p>
+                    <group>
+                        <field name="date_inicio"/>
+                        <field name="date_fin"/>
+                    </group>
+                    <footer>
+                        <button name="open_table" string="Generar" type="object"  class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_report_sale_invoice" model="ir.actions.act_window">
+            <field name="name">Análisis de facturas de venta</field>
+            <field name="res_model">wizard.report.sale.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wizard_report_sale_invoice"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="menu_action_wizard_report_sale_invoice"
+            action="action_wizard_report_sale_invoice"
+            parent="account.menu_finance_reporting"
+            sequence="12"/>
+
+        <record id="view_report_sale_invoice_graph" model="ir.ui.view">
+            <field name="name">report.sale.invoice.graph</field>
+            <field name="model">report.sale.invoice</field>
+            <field name="arch" type="xml">
+                <graph string="Análisis de facturas de venta" type="pivot">
+                    <field name="recibo" type="row"/>
+                    <field name="period_id" type="col"/>
+                    <field name="price_total" type="measure"/>
+                    <field name="quantity" type="measure"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_report_sale_invoice_search" model="ir.ui.view">
+            <field name="name">report.sale.invoice.search</field>
+            <field name="model">report.sale.invoice</field>
+            <field name="arch" type="xml">
+                <search string="Análisis de facturas de venta">
+                    <field name="date"/>
+                    <field name="product_id"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="categ_id" filter_domain="[('categ_id', 'child_of', self)]"/>
+                    <group expand="1" string="Agrupar por">
+                        <filter string="Cliente" name="partner_id" context="{'group_by':'partner_id'}"/>
+                        <filter string="Recibo" context="{'group_by':'recibo'}" name='group_by_recibo'/>
+                        <filter string="Producto" context="{'group_by':'product_id'}" name='group_by_product'/>
+                        <filter string="Categoria de producto" name="category_product" context="{'group_by':'categ_id'}"/>
+                     </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

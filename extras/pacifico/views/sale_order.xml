@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_sale_invoice_real_form">
+            <field name="name">sale.order.quantity.total.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="quantity_total" class="oe_subtotal_footer_separator"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

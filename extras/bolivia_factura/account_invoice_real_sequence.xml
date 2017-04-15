@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="seq_type_account_invoice_real" model="ir.sequence.type">
+            <field name="name">Comprobante</field>
+            <field name="code">account.invoice.real</field>
+        </record>
+
+        <record id="seq_account_invoice_real" model="ir.sequence">
+            <field name="name">Comprobante</field>
+            <field name="code">account.invoice.real</field>
+            <field name="prefix"></field>
+            <field name="padding">6</field>
+        </record>
+
+    </data>
+</openerp>

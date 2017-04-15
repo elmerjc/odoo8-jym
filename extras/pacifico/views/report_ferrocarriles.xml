@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="andina_industrial.report_ferrocarriles" name="Reporte de Vagones y Patio Simon">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.andina_layout">
+                    <div id="report_andina" class="page">
+                        <div class="oe_structure"/>
+                        <h3>
+                            <span t-esc="o.titulo"/>
+                        </h3>
+                        <table id="table-data">
+                            <thead>
+                                <tr>
+                                    <th colspan="18" style="height:40px;"></th>
+                                </tr>
+                                <tr style="background-color:#F7BE75;">
+                                    <th style="border: 1px solid black;width: 200px;" class="text-center">GERENCIA</th>
+                                    <th style="border: 1px solid black;width: 200px;" class="text-center">AREA OPERATIVA</th>
+                                    <th style="border: 1px solid black;width: 300px;" class="text-center">TIPO DE PRENDAS</th>
+                                    <th style="border: 1px solid black;width: auto;" class="text-center">CANTIDAD</th>
+                                    <th style="border: 1px solid black;width: auto;" class="text-center">KILOS</th>
+                                    <th style="border: 1px solid black;width: 65px;" class="text-center">COSTO KILO</th>
+                                    <th style="border: 1px solid black;width: 105px;" class="text-center">TOTAL S/</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="get_data_vagones()">
+                                    <tr>
+                                        <t t-set="num" t-value="len(get_data_vagones()) + 2"/>
+                                        <td  t-att-rowspan="num" style="border: 1px solid black;" class="text-center"></td>
+                                        <td  t-att-rowspan="num" style="border: 1px solid black;vertical-align: middle;" class="text-center"><span t-esc="get_data_vagones()[0]['area_operativa']"/></td>
+                                        <t t-foreach="get_data_vagones()" t-as="data">
+                                            <tr>
+                                                <td style="border: 1px solid black;" class="text-left"><span t-esc="data['prenda']"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right"><span t-esc="data['cantidad_total']"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right"><span t-esc="'{0:,.3f}'.format(data['kilos_total'])"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right">S/. <span t-esc="o.precio_kilo"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right">S/. <span t-esc="'{0:,.3f}'.format(data['kilos_total'] * (o.precio_kilo))"/></td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td style="border: 1px solid black;" class="text-center"></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;background-color:#FDCBAF;" class="text-right"><span t-esc="get_sum_vagones()[0]"/></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;background-color:#FDCBAF;" class="text-right"><span t-esc="'{0:,.3f}'.format(get_sum_vagones()[1])"/></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;" class="text-center"></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;" class="text-center"></td>
+                                        </tr>
+                                    </tr>
+                                </t>
+                                <t t-if="get_data_patio_simon()">
+                                    <tr>
+                                        <t t-set="num" t-value="len(get_data_patio_simon()) + 2"/>
+                                        <td  t-att-rowspan="num" style="border: 1px solid black;" class="text-center"></td>
+                                        <td  t-att-rowspan="num" style="border: 1px solid black;vertical-align: middle;" class="text-center"><span t-esc="get_data_patio_simon()[0]['area_operativa']"/></td>
+                                        <t t-foreach="get_data_patio_simon()" t-as="data">
+                                            <tr>
+                                                <td style="border: 1px solid black;" class="text-left"><span t-esc="data['prenda']"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right"><span t-esc="data['cantidad_total']"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right"><span t-esc="'{0:,.3f}'.format(data['kilos_total'])"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right">S/. <span t-esc="o.precio_kilo"/></td>
+                                                <td style="border: 1px solid black; padding-right: 5px;" class="text-right">S/. <span t-esc="'{0:,.3f}'.format(data['kilos_total'] * (o.precio_kilo))"/></td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td style="border: 1px solid black;" class="text-center"></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;background-color:#FDCBAF;" class="text-right"><span t-esc="get_sum_patio_simon()[0]"/></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;background-color:#FDCBAF;" class="text-right"><span t-esc="'{0:,.3f}'.format(get_sum_patio_simon()[1])"/></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;" class="text-center"></td>
+                                            <td style="border: 1px solid black; padding-right: 5px;" class="text-center"></td>
+                                        </tr>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="border: 1px solid black; background-color:#F7BE75;">TOTALES</td>
+                                        <td style="border: 1px solid black; padding-right: 5px; background-color:#FDCBAF;" class="text-right"><t t-esc="get_sum_totales()[0]"/></td>
+                                        <td style="border: 1px solid black; padding-right: 5px; background-color:#FDCBAF;" class="text-right"><t t-esc="'{0:,.3f}'.format(get_sum_totales()[1])"/></td>
+                                        <td colspan="2" style="border: 1px solid black;padding-left: 5px; padding-right: 5px; font-size: 13px; font-weight: bold; background-color:#FDCBAF;" class="text-right">S/. <span t-esc="'{0:,.3f}'.format(get_sum_totales()[1] * (o.precio_kilo))"/></td>
+                                    </tr>
+                            </tfooter>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>ILO, <span t-field="o.date_presentacion" t-field-options='{"format": "d MMMM Y"}'/></td>
+                            </tr>
+                        </table>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

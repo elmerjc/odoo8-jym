@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="view_partner_pagos_form">
+            <field name="name">res.partner.pagos.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="partner_pagos" string="Pagos">
+                        <group>
+                            <field name="amount_positive"/>
+                        </group>
+                        <field name="pagos_ids">
+                            <tree string="Pagos del cliente">
+                                <field name="sequence" widget="handle"/>
+                                <field name="sale_name"/>
+                                <field name="sale_total"/>
+                                <field name="date"/>
+                                <field name="metodo"/>
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

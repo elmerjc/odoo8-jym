@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      <menuitem id="invoice_real_menu"  name="Comprobantes" sequence="10" />
+      <menuitem id="invoice_real_view"  name="Comprobantes" parent="invoice_real_menu"/>
+
+	  <record id="view_account_invoice_real_filter" model="ir.ui.view">
+        <field name="name">account.invoice.real.select</field>
+        <field name="model">account.invoice.real</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Comprobante">
+                <field name="number" string="Comprobante" filter_domain="['|','|','|', ('number','ilike',self), ('origin','ilike',self), ('partner_id', 'child_of', self)]"/>
+                <separator/>
+                <field name="partner_id" operator="child_of"/>
+                <field name="user_id" string="Responsable"/>
+                <separator/>
+                <filter domain="[('user_id','=',uid)]" help="Mis Comprobantes"/>
+                <group expand="0" string="Agrupar por">
+                  	<filter string="Cliente" name="group_by_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Responsable" context="{'group_by':'user_id'}"/>
+                </group>
+           </search>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="view_invoice_real_graph">
+        <field name="name">account.invoice.real.graph</field>
+        <field name="model">account.invoice.real</field>
+        <field name="arch" type="xml">
+            <graph string="Comprobantes" type="bar">
+                <field name="partner_id"/>
+                <field name="amount_total_real" operator="+"/>
+            </graph>
+        </field>
+      </record>
+
+      <record id="invoice_real_tree" model="ir.ui.view">
+        <field name="name">account.invoice.real.tree</field>
+        <field name="model">account.invoice.real</field>
+        <field name="arch" type="xml">
+            <tree string="Comprobante">
+                <field name="partner_id" groups="base.group_user"/>
+                <field name="date_invoice"/>
+                <field name="number"/>
+                <field name="name" invisible="1"/>
+                <field name="user_id" string="Responsable"/>
+                <field name="origin"/>
+                <field name="amount_untaxed_real" sum="Total sin impuesto"/>
+                <field name="amount_total_real" sum="Total"/>
+            </tree>
+        </field>
+      </record>
+
+      <record id="invoice_real_form" model="ir.ui.view">
+        <field name="name">account.invoice.real.form</field>
+        <field name="model">account.invoice.real</field>
+        <field name="arch" type="xml">
+            <form string="Comprobante">
+            <header>
+                <button name="action_open_comprobante" type="object" string="Abrir" attrs="{'invisible':[('state', '!=', 'cancel')]}" class="oe_highlight" groups="base.group_user"/>
+                <button name="action_create_comprobante" type="object" string="Validar" attrs="{'invisible':[('state','!=','draft')]}" class="oe_highlight" groups="base.group_user"/>
+                <button name="action_cancel_comprobante" type="object" string="Cancelar" attrs="{'invisible':[('state', '=', 'cancel')]}" class="oe_highlight" groups="base.group_user"/>
+                <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,paid" statusbar_colors='{"draft":"blue","cancel":"red"}'/>
+            </header>
+            <sheet string="Invoice">
+                <h1>
+                    <label string="Comprobante"/>
+                    <field name="number" readonly="1" class="oe_inline"/>
+                </h1>
+                <group>
+                    <group>
+                        <field string="Cliente" name="partner_id"
+                            context="{'search_default_customer':1, 'show_address': 1}"
+                            options='{"always_reload": True}'
+                            domain="[('customer', '=', True)]"/>
+                    </group>
+                    <group>
+                        <field name="date_invoice"/>
+                        <field name="currency_id"/>
+                    </group>
+                </group>
+                <notebook colspan="4">
+                    <page name="invoices_lines" string="Items del comprobante">
+                        <field name="invoice_line" nolabel="1" widget="one2many_list">
+                            <tree string="Items de la comprobante" editable="top">
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id" readonly="1"/>
+                                <field name="quantity" readonly="1"/>
+                                <field name="price_unit" readonly="1" invisible="1"/>
+                                <field name="price_unit_real"/>
+                                <field name="price_subtotal_real"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_untaxed_real" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>
+                            <div invisible="1">
+                                <label for="amount_tax_real"/>
+                            </div>
+                            <field name="amount_tax_real" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}" invisible="1"/>
+                            <field name="amount_total_real" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="quantity_total" class="oe_subtotal_footer_separator"/>
+                        </group>
+                        <div class="oe_clear">
+                            <label for="comment"/>
+                        </div>
+                        <field name="comment" class="oe_inline" placeholder="Glosa"/>
+                    </page>
+                </notebook>
+            </sheet>
+            </form>
+        </field>
+      </record>
+
+      <record id="listar_invoice_real" model="ir.actions.act_window">
+        <field name="name">Comprobantes</field>
+        <field name="res_model">account.invoice.real</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="search_view_id" ref="view_account_invoice_real_filter"/>
+      </record>
+
+      <menuitem id="invoice_real_action"  name="Comprobantes" parent="invoice_real_view" action="listar_invoice_real" />
+
+    </data>
+</openerp>

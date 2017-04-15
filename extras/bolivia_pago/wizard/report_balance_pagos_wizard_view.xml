@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_report_balance_pagos" model="ir.ui.view">
+            <field name="name">Reporte del balance de pagos</field>
+            <field name="model">wizard.report.balance.pagos</field>
+            <field name="arch" type="xml">
+                <form string="Parametros">
+                    <group>
+                        <field name="partner_id"/>
+                    </group>
+                    <p class="oe_gray">
+                        Elegir el rango de fecha
+                    </p>
+                    <group>
+                        <field name="date_inicio"/>
+                        <field name="date_fin"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Generar Reporte" type="object"  class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_report_balance_pagos">
+            <field name="name">Reporte de balance de pagos</field>
+            <field name="res_model">wizard.report.balance.pagos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_report_balance_pagos"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem 
+            id="menu_action_wizard_report_balance_pagos" 
+            action="action_wizard_report_balance_pagos" 
+            parent="menu_bolivia_pagos_view" 
+            sequence="2"/>
+
+    </data>
+</openerp>
+

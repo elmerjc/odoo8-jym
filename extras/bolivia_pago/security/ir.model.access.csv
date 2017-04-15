@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_bolivia_pago_user,bolivia_pago user,model_bolivia_pago,group_name_bolivia_user,1,1,0,0
+access_bolivia_pago_manager,bolivia_pago manager,model_bolivia_pago,group_name_bolivia_manager,1,1,1,1
+access_wizard_report_balance_pagos_user,wizard_report_balance_pagos user,model_wizard_report_balance_pagos,group_name_bolivia_user,1,1,0,0
+access_wizard_report_balance_pagos_manager,wizard_report_balance_pagos manager,model_wizard_report_balance_pagos,group_name_bolivia_manager,1,1,1,1

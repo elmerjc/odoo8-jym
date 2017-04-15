@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record model="ir.ui.view" id="view_sale_invoice_real_form">
+            <field name="name">sale.invoice.real.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_exists']" position="after">
+                    <field name="factura_exists" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='copy_quotation']" position="before">
+                	<button name="action_factura_create" string="Crear Comprobante" attrs="{'invisible': ['|', ('factura_exists', '=', True), ('state', 'in', ('draft','cancel'))]}" class="oe_highlight" type="object" groups="base.group_user" confirm="¿Esta seguro en crear el Comprobante?"/>
+                    <button name="action_view_factura" string="Ver Comprobante" attrs="{'invisible': [('factura_exists', '=', False)]}" class="oe_highlight" type="object" groups="base.group_user"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_invoice_quantity_form">
+            <field name="name">sale.order.quantity.total.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="quantity_total" class="oe_subtotal_footer_separator"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_sale_partner_form">
+            <field name="name">sale.order.partner.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="partner_nit"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
