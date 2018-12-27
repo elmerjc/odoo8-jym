@@ -51,7 +51,7 @@ class account_invoice(models.Model):
     _name = "account.invoice"
     _inherit = ['mail.thread']
     _description = "Invoice"
-    _order = "number desc, id desc"
+    _order = "date_invoice desc, internal_number desc"
     _track = {
         'type': {
         },

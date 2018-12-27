@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+      <report
+          id="action_report"
+          model="padron.padron"
+          string="Lista"
+          report_type="qweb-pdf"
+          name="padron.report"
+          attachment_use="False"
+          file="padron.report"
+      />
+
+      <report
+          id="action_report_trabajadores"
+          model="padron.list"
+          string="Lista de trabajadores"
+          report_type="qweb-pdf"
+          name="padron.report_trabajadores"
+          attachment_use="False"
+          file="padron.report_trabajadores"
+      />
+
+      <record id="padron.action_report_trabajadores" model="ir.actions.report.xml">
+        <field name="paperformat_id" ref="report.paperformat_euro" />
+      </record>
+
+    </data>
+</openerp>

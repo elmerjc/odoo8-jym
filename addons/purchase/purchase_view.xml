@@ -239,10 +239,6 @@
                                 <tree string="Purchase Order Lines" editable="bottom">
                                     <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,False,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,False,False,parent.state,context)"/>
                                     <field name="name" invisble="1"/>
-                                    <field name="x_declaracion"/>
-                                    <field name="x_container"/>
-                                    <field name="x_recibo"/>
-                                    <field name="x_item"/>
                                     <field name="date_planned" invisble="1"/>
                                     <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                                     <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>

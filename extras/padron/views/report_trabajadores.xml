@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_trabajadores">
+          <t t-call="report.html_container">
+              <t t-foreach="docs" t-as="o">
+                  <t t-set="list_miembros" t-value="o.get_all_miembros()"/>
+                  <t t-call="padron.padron_layout">
+                      <div class="page">
+                        <div class="row text-center">
+                          <h3>Reporte de Miembros del Sindicato</h3>
+                        </div>
+                        <table class="table-striped">
+                          <thead>
+                            <tr>
+                              <th>Registro</th>
+                              <th>DNI</th>
+                              <th>Nombre</th>
+                              <th>Apellidos</th>
+                              <th>Tipo de Trabajador</th>
+                              <th>Lugar de Trabajador</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="list_miembros" t-as="m">
+                              <tr>
+                                <td><span t-esc="m['registro']"/></td>
+                                <td><span t-esc="m['dni']"/></td>
+                                <td><span t-esc="m['nombre']"/></td>
+                                <td><span t-esc="m['apellidos']"/></td>
+                                <td><span t-esc="m['tipo_trabajador']"/></td>
+                                <td><span t-esc="m['lugar_trabajo']"/></td>
+                              </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                      </div>
+                  </t>
+              </t>
+          </t>
+        </template>
+    </data>
+</openerp>

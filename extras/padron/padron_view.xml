@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem id="padron_menu"  name="Padron" sequence="21" />
+
+        <menuitem id="padron_miembros_view"  name="Padron" parent="padron_menu"/>
+        
+        <record model="ir.actions.act_window" id="listar_miembros_action">
+            <field name="name">Miembros del Sindicato</field>
+            <field name="res_model">padron.padron</field>
+            <field name="view_mode">tree,form,graph</field>
+        </record>
+
+        <menuitem id="padron_miembros_action"  name="Trabajadores Afiliados" parent="padron_miembros_view" action="listar_miembros_action" />
+        
+        <record id="padron_miembros_search_view" model="ir.ui.view">
+            <field name="name">view.padron.padron.search</field>
+            <field name="model">padron.padron</field>
+            <field name="arch" type="xml">
+                <search string="Miembros del Sindicato">
+                    <field name="name" string="Trabajador" filter_domain="['|',('dni','=',self),'|',('registro','ilike',self),('name','ilike',self)]"/>
+                    <filter string="Obreros" icon="terp-accessories-archiver" domain="[('tipo_trabajador','=','obrero')]"/>
+                    <filter string="Empleados" icon="terp-accessories-archiver" domain="[('tipo_trabajador','=','empleado')]"/>
+                    <filter string="Sistema de pension AFP" icon="terp-accessories-archiver" domain="[('sistema_pension','=','AFP')]"/>
+                    <filter string="Sistema de pension ONP" icon="terp-accessories-archiver" domain="[('sistema_pension','=','ONP')]"/>
+                    <separator/>
+                    <field name="grado_instruccion" widget="selection" filter_domain="[('grado_instruccion','ilike',self)]"/> 
+                    <group  expand='0' string='Group by...'>
+                       <filter string='Grado de Instruccion' domain="[]" context="{'group_by' : 'grado_instruccion'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_padron_padron_tree">
+            <field name="name">view.padron.padron.tree</field>
+            <field name="model">padron.padron</field>
+            <field name="arch" type="xml">
+                <tree string="Miembros del Sindicato" colors="red:estado=='retirado';blue:estado in ('finalizado');">
+                    <field name="registro"/>
+                    <field name="fecha_inscripcion"/>
+                    <field name="dni"/>
+                    <field name="nombre"/>
+                    <field name="apellidos"/>
+                    <field name="lugar_trabajo"/>
+                    <field name="estado"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_padron_padron_form">
+            <field name='name'>view.padron.padron.form</field>
+            <field name="model">padron.padron</field>
+            <field name="arch" type="xml">
+                <form string="Cedula de Inscripcion">
+                    <header>
+                      <button name="action_retirado" estados="activo,finalizado" string="Cambiar a Retirado" type="object" class="oe_highlight"/>
+                      <button name="action_activo" estados="retirado" string="Cambiar a Activo" type="object" class="oe_highlight"/>
+                      <button name="action_finalizar" estados="activo" string="Finalizar" type="object"/>
+                      <field name="estado" widget="statusbar" statusbar_visible="retirado,activo,finalizado" statusbar_colors='{"miembro_retirado":"red","miembro_finalizado":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                          <group>
+                            <field name="image_medium" widget="image" nolabel="1" class="oe_avatar oe_left"/>
+                          </group>
+                          <group>
+                            <field name="registro"/>
+                            <field name="fecha_inscripcion"/>
+                            <field name="fecha_trabajo"/>
+                          </group>
+                        </group>
+                        <notebook>
+                            <page string="Datos Personales">
+                              <group>
+                                <field name="nombre" on_change="onchange_nombre(nombre, apellidos, context)"/>
+                                <field name="apellidos" on_change="onchange_nombre(nombre, apellidos, context)"/>
+                              </group>
+                              <group>
+                                <group>
+                                  <field name="dni"/>
+                                  <field name="email"/>
+                                </group>
+                                <group>
+                                  <field name="fecha_nac" on_change="onchange_getage_id(fecha_nac,context)"/>
+                                  <field name="lugar_nac"/>
+                                  <field name="edad"/>
+                                </group>
+                                <group>
+                                  <field name="sexo"/>
+                                  <field name="estado_civil"/>
+                                </group>
+                                <group>
+                                  <field name="grado_instruccion"/>
+                                  <field name="profesion"/>
+                                </group>
+                              </group>
+                              <group>
+                                <field name="direccion1"/>
+                                <field name="direccion2"/>
+                              </group>
+                              <group>
+                                <group>
+                                  <field name="telefono"/>
+                                  <field name="celular1"/>
+                                  <field name="celular2"/>
+                                </group>
+                                <group>
+                                </group>
+                              </group>
+                            </page>
+                            <page string="Datos Laborales">
+                              <group>
+                                <group>
+                                  <field name="lugar_trabajo"/>
+                                  <field name="departamento_id"/>
+                                  <field name="seccion_id" domain="[('lugar_trabajo','=',lugar_trabajo)]"/>
+                                  <field name="cargo"/>
+                                </group>
+                                <group>
+                                  <field name="tipo_trabajador" widget="radio"/>
+                                  <field name="categoria_empleado" attrs="{'invisible':[('tipo_trabajador','=','empleado')]}"/>
+                                  <field name="categoria_obrero" attrs="{'invisible':[('tipo_trabajador','=','obrero')]}"/>
+                                  <field name="sistema_pension"/>
+                                  <field name="sueldo"/>
+                                </group>
+                                <group>
+                                  <field name="telefono_trabajo"/>
+                                </group>
+                              </group>
+                              <group>
+                                <field name="comentarios"/>
+                              </group>
+                            </page>
+                            <page string="Datos Familiares">
+                              <field name="familia_ids">
+                                <tree string="Familiares" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="nombre"/>
+                                    <field name="apellidos"/>
+                                    <field name="parentesco"/>
+                                    <field name="fecha_nac"/>
+                                    <field name="edad"/>
+                                    <field name="ocupacion"/>
+                                    <field name="celular"/>
+                                </tree>
+                              </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Departamentos de trabajo -->
+        <record id="trabajo_departamento_form_view" model="ir.ui.view">
+            <field name="name">trabajo.departamento.form</field>
+            <field name="model">trabajo.departamento</field>
+            <field name="arch" type="xml">
+                <form string="Departamentos de trabajo">
+                  <group>
+                    <field name="name"/>
+                  </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="trabajo_departamento_tree_view" model="ir.ui.view">
+            <field name="name">trabajo.departamento.tree</field>
+            <field name="model">trabajo.departamento</field>
+            <field name="arch" type="xml">
+                <tree string="Departamentos de trabajo">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Secciones de trabajo -->
+        <record id="trabajo_seccion_form_view" model="ir.ui.view">
+            <field name="name">trabajo.seccion.form</field>
+            <field name="model">trabajo.seccion</field>
+            <field name="arch" type="xml">
+                <form string="Secciones de trabajo">
+                  <group>
+                      <field name="name"/>
+                      <field name="departamento_id" options='{"no_open": True}'/>
+                      <field name="lugar_trabajo"/>
+                  </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="trabajo_seccion_tree_view" model="ir.ui.view">
+            <field name="name">trabajo.seccion.tree</field>
+            <field name="model">trabajo.seccion</field>
+            <field name="arch" type="xml">
+                <tree string="Secciones de trabajo">
+                    <field name="name"/>
+                    <field name="departamento_id"/>
+                    <field name="lugar_trabajo"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Graficos -->
+        <record id="view_padron_graph" model="ir.ui.view">
+          <field name="name">view.padron.padron.graph</field>
+          <field name="model">padron.padron</field>
+          <field name="arch" type="xml">
+            <graph string="Padron" type="pie">
+              <field name="lugar_trabajo" type="row"/>
+              <field name="tipo_trabajador"/>
+            </graph>
+          </field>
+        </record>
+
+    </data>
+</openerp>

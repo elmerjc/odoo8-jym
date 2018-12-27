@@ -306,7 +306,7 @@ class res_partner(osv.Model, format_address):
 
         # technical field used for managing commercial fields
         'commercial_partner_id': fields.function(_commercial_partner_id, type='many2one', relation='res.partner', string='Commercial Entity', store=_commercial_partner_store_triggers),
-        'x_ruc': fields.char('RUC')
+        'x_ruc': fields.char('RUC', readonly=True)
     }
 
     @api.model

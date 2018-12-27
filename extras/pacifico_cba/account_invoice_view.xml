@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_invoice_cba_form">
+            <field name="name">account.invoice.cba.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="pacifico_facturador.view_account_facturador_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Facturador']/group" position="after">
+                    <div>
+                        <group>
+                            <field name="invoice_cba"/>
+                            <field name="date_cba"/>
+                            <field name="motivo_cba"/>
+                            <div class="oe_structure"/>
+                            <button type="object" name="create_file_cba" string="Dar de baja"/>
+                        </group>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

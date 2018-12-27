@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="view_librana_saldo_report_graph" model="ir.ui.view">
+         <field name="name">librana.saldo.report.graph</field>
+         <field name="model">librana.saldo.report</field>
+         <field name="arch" type="xml">
+             <graph string="Reporte de saldo a favor de las compras" type="pivot">
+                 <field name="partner_id" type="row"/>
+                 <field name="saldo" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="view_librana_saldo_report_search" model="ir.ui.view">
+        <field name="name">librana.saldo.report.search</field>
+        <field name="model">librana.saldo.report</field>
+        <field name="arch" type="xml">
+            <search string="Reporte de saldo a favor de las compras">
+                <field name="date_invoice"/>
+                <filter string="Este Periodo Anual" name="thisyear" domain="['|', ('date_invoice', '=', False), '&amp;',('date_invoice','&lt;=', time.strftime('%%Y-12-31')),('date_invoice','&gt;=',time.strftime('%%Y-01-01'))]" help="Saldo periodo anual"/>
+                <separator/>
+                <filter string="Proveedor" name="partner_id" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
+                <separator/>
+                <field name="user_id" />
+                <group expand="1" string="Group By">
+                    <filter string="Proveedor" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Responsable" name='user' context="{'group_by':'user_id'}"/>
+                    <separator orientation="vertical" />
+                    <filter string="Periodo" context="{'group_by':'period_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_librana_saldo_report" model="ir.actions.act_window">
+        <field name="name">Saldo a favor compras</field>
+        <field name="res_model">librana.saldo.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph</field>
+        <field name="context">{'search_default_current':1, 'search_default_customer':1, 'group_by':[], 'group_by_no_leaf':1, 'search_default_year': 1}</field>
+        <field name="search_view_id" ref="view_librana_saldo_report_search"/>
+        <field name="help">Reporte de saldo a favor de las compras</field>
+
+    </record>
+
+    <menuitem action="action_librana_saldo_report" id="menu_action_librana_saldo_report" parent="base.next_id_73" sequence="0"/>
+
+</data>
+</openerp>

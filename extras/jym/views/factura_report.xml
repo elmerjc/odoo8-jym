@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="account.factura_report">
+            <t t-foreach="docs" t-as="o">
+            <t t-call="report.factura_layout">
+                 <div class="page" style="font-size:15px;font-weight:normal;">
+                   <div class="oe_structure"/>
+                   <div style="padding-top:20px;"/>
+                   <table class="table" style="margin:0px; border:0px;font-weight:normal;">
+                        <thead  style="border: 0px;">
+                            <tr style="border: 0px;">
+                                <th style="border: 0px;"></th>
+                                <th style="border: 0px;"></th>
+                                <th style="border: 0px;"></th>
+                                <th style="border: 0px;"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody" style="border: 0px;">
+                            <tr t-foreach="o.invoice_line" t-as="l" style="border: 0px;">
+                                <td style="border: 0px;padding:0px 0px 6px 0px;margin:0px;">
+                                    <span style="padding-left:30px;" t-field="l.quantity"/>
+                                </td>
+                                <td style="border: 0px;padding:0px;margin:0px;max-width:285px;text-align:justify;text-justify:inter-word;">
+                                      <!-- <span t-esc="'['+l.product_id.x_codigo+']'"/><span t-field="l.product_id.name"/> -->
+                                       <span t-field="l.product_id"/>
+                                       <t t-if="(l.lot_formatted_note is not False)">
+                                         <div style="margin-left:25px;" t-field="l.lot_formatted_note" />
+                                       </t>
+                                </td>
+                                <td class="text-right" style="border: 0px;padding:0px;margin:0px;max-width:80px;">
+                                    <t t-set="descuento" t-value="l.price_unit*(l.discount/100)"/>
+                                    <t t-set="precio" t-value="l.price_unit-descuento"/>
+                                    <span style="margin-right:0px;" t-esc="l.price_unit"/>
+                                </td>
+                                <td class="text-right" style="border: 0px;padding:0px;margin:0px;max-width:95px;">
+                                    <span style="margin-right:15px;display:block;" t-esc="l.price_unit*l.quantity"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="oe_structure"/>
+                </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

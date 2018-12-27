@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jym_report_user,jym_report user,model_jym_report,group_name_jym_user,1,1,1,0
+access_jym_report_manager,jym_report manager,model_jym_report,group_name_jym_manager,1,1,1,1

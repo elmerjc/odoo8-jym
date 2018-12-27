@@ -26,7 +26,7 @@ conf = openerp.tools.config
 # Path to the OpenERP Addons repository (comma-separated for
 # multiple locations)
 
-conf['addons_path'] = '../../addons/trunk,../../web/trunk/addons'
+conf['addons_path'] = '/opt/odoo/addons,/opt/odoo/extras'
 
 # Optional database config if not using local socket
 #conf['db_name'] = 'mycompany'
@@ -46,7 +46,7 @@ openerp.service.server.load_server_wide_modules()
 # Gunicorn
 #----------------------------------------------------------
 # Standard OpenERP XML-RPC port is 8069
-bind = '127.0.0.1:8069'
+bind = '127.0.0.1:8000'
 pidfile = '.gunicorn.pid'
 workers = 4
 timeout = 240

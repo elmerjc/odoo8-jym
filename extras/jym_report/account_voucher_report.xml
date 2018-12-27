@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="account_voucher_print"
+            model="account.voucher"
+            string="Recibos"
+            report_type="qweb-pdf"
+            name="account.report_voucher_print"
+            file="account.report_voucher_print"
+            menu="True"
+        />
+
+    </data>
+</openerp>

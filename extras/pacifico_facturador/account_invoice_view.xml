@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="view_account_facturador_form" model="ir.ui.view">
+        <field name="name">account.invoice.facturador.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <data>
+               <xpath expr="//page[@string='Payments']" position="after">
+                  <page string="Facturador">
+                      <group>
+                        <button type="object" name="create_file_txt" string="Crear archivos"/>
+                      </group>
+                  </page>
+               </xpath>
+            </data>
+       </field>
+    </record>
+</data>
+</openerp>

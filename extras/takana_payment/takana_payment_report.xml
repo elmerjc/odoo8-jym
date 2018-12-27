@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="action_print_payment"
+            string="Imprimir Pagos"
+            model="takana.invoice" 
+            report_type="qweb-pdf"
+            file="takana_payment.report_print_payment" 
+            name="takana_payment.report_print_payment" 
+        />
+
+        <menuitem id="takana_invoice_report_menu"  name="Reportes" parent="takana_invoice_menu"/>
+
+        <report 
+            id="action_report_invoice_wizard"
+            string="Reporte de facturas"
+            model="wizard.report.invoice"
+            report_type = "qweb-pdf"
+            file="takana_payment.report_invoice"
+            name="takana_payment.report_invoice"
+            menu="False"
+        />
+
+        <record id="takana_payment.action_report_invoice_wizard" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report.paperformat_euro" />
+        </record>
+
+        <report 
+            id="action_report_payment_wizard"
+            string="Reporte de letras de pago"
+            model="wizard.report.payment"
+            report_type = "qweb-pdf"
+            file="takana_payment.report_payment"
+            name="takana_payment.report_payment"
+            menu="False"
+        />
+
+        <record id="takana_payment.action_report_payment_wizard" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="report.paperformat_euro" />
+        </record>
+    </data>
+</openerp>

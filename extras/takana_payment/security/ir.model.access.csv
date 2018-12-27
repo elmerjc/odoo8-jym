@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_takana_invoice_user,takana_invoice user,model_takana_invoice,group_takana_user,1,1,1,0
+access_takana_invoice_manager,takana_invoice manager,model_takana_invoice,group_takana_manager,1,1,1,1
+access_takana_payment_user,takana_payment user,model_takana_payment,group_takana_user,1,1,1,0
+access_takana_payment_manager,takana_payment manager,model_takana_payment,group_takana_manager,1,1,1,1
+access_wizard_add_dues_user,wizard_add_dues user,model_wizard_add_dues,group_takana_user,1,1,1,0
+access_wizard_add_dues_manager,wizard_add_dues manager,model_wizard_add_dues,group_takana_manager,1,1,1,1

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_librana_vehiculo_user,librana_vehiculo user,model_librana_vehiculo,group_name_librana_user,1,1,0,0
+access_librana_chofer_manager,librana_chofer manager,model_librana_chofer,group_name_librana_manager,1,1,1,1
+access_librana_vehiculo_user,librana_vehiculo user,model_librana_vehiculo,group_name_librana_user,1,1,0,0
+access_librana_vehiculo_manager,librana_vehiculo manager,model_librana_vehiculo,group_name_librana_manager,1,1,1,1

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+  <template id="padron_layout">
+      <t t-call="padron.padron_layout_header"/>
+      <t t-raw="0"/>
+      <t t-call="padron.padron_layout_footer"/>
+  </template>
+
+  <template id="padron_layout_header">
+      <div class="header">
+        <div class="row">
+          <div class="col-xs-4 col-xs-offset-8">
+            <img src='/document/static/img/company_logo.png'/>
+          </div>
+        </div>
+      </div>
+  </template>
+
+  <template id="padron_layout_footer">
+      <div class="footer">
+        <div class="row" style="background-color:#568eff;color:#ffffff;">
+            <div class="col-xs-8">
+              <div class="col-xs-4" style="text-align:right">
+                Pagina <span class="page"/> de <span class="topage"/>
+              </div>
+            </div>
+        </div>
+      </div>
+  </template>
+</data>
+</openerp>

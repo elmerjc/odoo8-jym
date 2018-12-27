@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_librana_chofer_tree">
+            <field name="name">view.librana.chofer.tree</field>
+            <field name="model">librana.chofer</field>
+            <field name="arch" type="xml">
+                <tree string="Choferes">
+                    <field name="name"/>
+                    <field name="brevete"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_librana_vehiculo_tree">
+            <field name="name">view.librana.vehiculo.tree</field>
+            <field name="model">librana.vehiculo</field>
+            <field name="arch" type="xml">
+                <tree string="Vehiculos">
+                    <field name="name"/>
+                    <field name="descripcion"/>
+                    <field name="tipo_contenedor"/>
+                    <field name="contenedor"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_librana_chofer_form">
+            <field name='name'>view.librana.chofer.form</field>
+            <field name="model">librana.chofer</field>
+            <field name="arch" type="xml">
+                <form string="Registro de choferes">
+                    <group>
+                        <field name="name"/>
+                        <field name="brevete"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_librana_vehiculo_form">
+            <field name='name'>view.librana.vehiculo.form</field>
+            <field name="model">librana.vehiculo</field>
+            <field name="arch" type="xml">
+                <form string="Registro de vehiculos">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="contenedor"/>
+                            <field name="capacidad"/>
+                        </group>
+                        <group>
+                            <field name="descripcion"/>
+                            <field name="tipo_contenedor" widget="radio"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

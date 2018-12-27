@@ -957,10 +957,6 @@ class sale_order_line(osv.osv):
         }, readonly=True),
         'delay': fields.float('Delivery Lead Time', required=True, help="Number of days between the order confirmation and the shipping of the products to the customer", readonly=True, states={'draft': [('readonly', False)]}),
         'procurement_ids': fields.one2many('procurement.order', 'sale_line_id', 'Procurements'),
-        'x_container' : fields.char('Container', readonly=True),
-        'x_recibo' : fields.char('Recibo', readonly=True),
-        'x_item' : fields.char('Item', readonly=True),
-        'x_declaracion' : fields.char('Declaracion', readonly=True),
     }
     _order = 'order_id desc, sequence, id'
     _defaults = {
@@ -1036,9 +1032,6 @@ class sale_order_line(osv.osv):
                 'product_id': line.product_id.id or False,
                 'invoice_line_tax_id': [(6, 0, [x.id for x in line.tax_id])],
                 'account_analytic_id': line.order_id.project_id and line.order_id.project_id.id or False,
-                'x_container': line.x_container,
-                'x_recibo': line.x_recibo,
-                'x_item': line.x_item,
             }
 
         return res
@@ -1172,7 +1165,7 @@ class sale_order_line(osv.osv):
         result['tax_id'] = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, taxes, context=context)
 
         if not flag:
-            result['name'] = self.pool.get('product.product').name_get(cr, uid, [product_obj.id], context=context_partner)[0][1]
+            result['name'] = product_obj.name #self.pool.get('product.product').name_get(cr, uid, [product_obj.id], context=context_partner)[0][1]
             if product_obj.description_sale:
                 result['name'] += '\n'+product_obj.description_sale
         domain = {}
@@ -1235,13 +1228,6 @@ class sale_order_line(osv.osv):
                     if result.get('product_uos_qty'):
                         values['product_uos_qty'] = result['product_uos_qty']
                     return {'value': values, 'domain': {}, 'warning': False}
-
-        x_recibo = product_obj.x_recibo
-        x_container = product_obj.x_container
-        x_item = product_obj.x_item
-        result['x_recibo'] =  x_recibo
-        result['x_container'] =  x_container
-        result['x_item'] =  x_item
 
         if warning_msgs:
             warning = {

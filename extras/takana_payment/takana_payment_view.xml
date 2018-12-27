@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+	  <record id="view_takana_payment_supplier_filter" model="ir.ui.view">
+        <field name="name">takana.payment.select</field>
+        <field name="model">takana.payment</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Pagos a Proveedor">
+                <field name="reference" string="Letra" filter_domain="[('reference','ilike',self)]"/>
+                <field name="invoice_id" string="Registro de Factura" filter_domain="[('invoice_id','ilike',self)]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Fecha vencimiento" name="group_by_date_expiration" context="{'group_by':'date_expiration:day'}"/>
+                </group>
+           </search>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="view_takana_payment_supplier_graph">
+        <field name="name">takana.payment.graph</field>
+        <field name="model">takana.payment</field>
+        <field name="arch" type="xml">
+            <graph string="Pagos a Proveedor" type="bar">
+                <field name="numero_cuota"/>
+                <field name="reference"/>
+                <field name="amount_total" operator="+"/>
+            </graph>
+        </field>
+      </record>
+
+      <record id="takana_payment_supplier_tree" model="ir.ui.view">
+        <field name="name">takana.payment.tree</field>
+        <field name="model">takana.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Pagos a Proveedor">
+                <field name="numero_cuota"/>
+                <field name="bank" />
+                <field name="reference"/>
+                <field name="number_invoice"/>
+                <field name="date_expiration"/>
+                <field name="amount" sum="Total"/>
+                <field name="date_cancel"/>
+                <field name="days_due"/>
+                <field name="amount_total" sum="Total"/>
+            </tree>
+        </field>
+      </record>
+
+      <record id="takana_payment_supplier_form" model="ir.ui.view">
+        <field name="name">takana.payment.form</field>
+        <field name="model">takana.payment</field>
+        <field name="arch" type="xml">
+            <form string="Pago a proveedor">
+            <header>
+            </header>
+            <sheet string="Pago">
+                <group>
+                    <group>
+                        <field name="numero_cuota"/>
+                        <field name="reference"/>
+                        <field name="bank"/>
+                    </group>
+                    <group>
+                        <field name="date_expiration"/>
+                        <field name="date_cancel"/>
+                        <field name="days_due"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="amount"/>
+                        <field name="amount_expiration"/>
+                        <field name="amount_due"/>
+                        <field name="amount_commission"/>
+                        <field name="amount_protesto"/>
+                        <field name="amount_notaria"/>
+                        <field name="amount_ift"/>
+                        <field name="amount_total"/>
+                    </group>
+                </group>
+            </sheet>
+            </form>
+        </field>
+      </record>
+
+      <record id="action_payment_supplier" model="ir.actions.act_window">
+        <field name="name">Pagos a proveedores</field>
+        <field name="res_model">takana.payment</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="search_view_id" ref="view_takana_payment_supplier_filter"/>
+      </record>
+
+      <menuitem id="takana_payment_supplier_view"  name="Pagos" parent="takana_invoice_menu"/>
+      <menuitem id="payment_supplier_action"  name="Pagos a proveedores" parent="takana_payment_supplier_view" action="action_payment_supplier" />
+      
+    </data>
+</openerp>

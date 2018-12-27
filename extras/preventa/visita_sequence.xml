@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="seq_type_preventa_visita" model="ir.sequence.type">
+            <field name="name">Visita</field>
+            <field name="code">preventa.visita</field>
+        </record>
+
+        <record id="seq_preventa_visita" model="ir.sequence">
+            <field name="name">Visita</field>
+            <field name="code">preventa.visita</field>
+            <field name="prefix">001-</field>
+            <field name="padding">6</field>
+        </record>
+
+    </data>
+</openerp>

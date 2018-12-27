@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="librana_factura">
+            <t t-call="report.factura_layout">
+                <div class="page">
+                    <div style="padding-top:40px;"/>
+                    <table class="table" style="margin:0px; border:0px;font-weight:normal;">
+                        <thead style="border: 0px;">
+                            <tr style="border: 0px;">
+                                <th style="border: 0px;"/>
+                                <th style="border: 0px;"/>
+                                <th style="border: 0px;"/>
+                                <th style="border: 0px;"/>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody" style="border: 0px;">
+                            <tr t-foreach="o.invoice_line" t-as="l" style="border: 0px;">
+                                <td style="border: 0px;padding:6px 0px 0px 0px;margin:0px;width:30px;max-width:35px;">
+                                    <span style="font-size:17px;" t-field="l.quantity"/>
+                                </td>
+                                <td style="border: 0px;padding:9px 0px 0px 0px;margin:0px;width:30px;max-width:35px;">
+                                    <span style="font-size:12px;" t-field="l.uos_id" groups="product.group_uom"/>
+                                </td>
+                                <td style="border: 0px;padding:6px 0px 0px 0px;margin:0px;width:250px;max-width:255px;">
+                                    <span style="font-size:17px;" t-field="l.name"/>
+                                </td>
+                                <td class="text-right" style="border: 0px;padding:6px 0px 0px 0px;margin:0px;width:30px;max-width:35px;">
+                                    <span style="font-size:17px;" t-field="l.price_unit"/>
+                                </td>
+                                <td class="text-right" style="border: 0px;padding:6px 0px 0px 0px;margin:0;width:70px;max-width:75px;">
+                                    <span style="margin-right:20px;font-size:17px;" t-esc="l.price_unit*l.quantity" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </template>
+    </data>
+</openerp>

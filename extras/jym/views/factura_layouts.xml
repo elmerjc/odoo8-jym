@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+  <template id="report.factura_layout">
+    <t t-call="report.factura_layout_header"/>
+    <t t-raw="0"/>
+    <t t-call="report.factura_layout_footer"/>
+  </template>
+
+  <template id="report.factura_layout_header">
+      <div class="header">
+            <div style="padding-top:100px;"/>
+            <div class="row" style="font-size:15px;font-family:sans-serif;font-weight:normal;">
+                <div class="col-xs-9 col-xs-offset-1">
+                   <span/><br/>
+                   <span style="margin: 10px 0 0 30px;display: block;" t-field="o.partner_id"/>
+                   <span style="margin: 10px 0 0 30px;display: block;" t-field="o.partner_id.street"/>
+                   <span style="margin: 10px 0 0 30px;display: block;" t-field="o.partner_id.x_ruc"/>
+               </div>
+                <div class="col-xs-2">
+                   <span style="font-size: 17px;" t-field="o.number"/><br/><br/><br/>
+                   <span style="margin:0;display: inline-block;" t-field="o.date_invoice" t-field-options='{"format": "dd "}'/>/
+                   <span style="margin:0;display: inline-block;" t-field="o.date_invoice" t-field-options='{"format": "MM"}'/>/
+                   <span style="margin:0;display: inline-block;" t-field="o.date_invoice" t-field-options='{"format": "y"}'/><br/>
+               </div>
+            </div>
+    </div>
+  </template>
+
+  <template id="report.factura_layout_footer">
+    <div class="footer">
+         <t t-set="total_descuento" t-value="int(0)"/>
+         <t t-foreach="o.invoice_line" t-as="l" style="border: 0px;">
+            <t t-set="descuento" t-value="l.price_unit*(l.discount/100)*l.quantity"/>
+            <t t-set="total_descuento" t-value="total_descuento+descuento"/>
+         </t>
+         <div class="row" style="font-size:14px; font-weight:normal;">
+           <div class="col-xs-12" style="margin-left:80px;">
+              <t t-if="total_descuento>0 and o.amount_discount>0">
+                 TOTAL BRUTO: <span t-esc="o.amount_total+total_descuento+o.amount_discount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                 <span t-esc="' - '"/>
+                 DESCUENTO: <span t-esc="total_descuento+o.amount_discount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                 <span t-esc="' - '"/>
+                 TOTAL NETO: <span t-esc="o.amount_total" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+               </t>
+              <t t-if="total_descuento>0 and o.amount_discount==0">
+                 TOTAL BRUTO: <span t-esc="o.amount_total+total_descuento" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                 <span t-esc="' - '"/>
+                 DESCUENTO: <span t-esc="total_descuento" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                 <span t-esc="' - '"/>
+                 TOTAL NETO: <span t-esc="o.amount_total" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+               </t>
+              <t t-if="total_descuento==0 and o.amount_discount>0">
+                 TOTAL BRUTO: <span t-esc="o.amount_total+o.amount_discount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                 <span t-esc="' - '"/>
+                 DESCUENTO: <span t-esc="o.amount_discount" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                 <span t-esc="' - '"/>
+                 TOTAL NETO: <span t-esc="o.amount_total" t-esc-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+               </t>
+               <br/><br/>
+           </div>
+        </div>
+        <div class="row" style="font-size:15px; font-weight:normal;">
+            <div class="col-xs-10">
+                <t t-set="total_int" t-value="int(o.amount_total)"/>
+                <t t-set="total_dec" t-value="o.amount_total%1"/>
+                <t t-set="total_red" t-value="'{0:.2f}'.format(total_dec)"/>
+                <t t-set="total_str" t-value="str(total_red)"/>
+                <span style="margin-left:80px;" t-esc="total_int" t-esc-options="{&quot;widget&quot;: &quot;num2words&quot;,&quot;case&quot;:&quot;upper&quot;}"/>
+                <span t-esc="' CON ' + total_str[2:] + '/100 SOLES'"/>
+            </div>
+            <div class="col-xs-2 text-right" style="font-size:17px; font-weight:normal;">
+                <t t-set="total_bruto" t-value="'{0:.2f}'.format(o.amount_total/1.18)"/>
+                <t t-set="total_igv" t-value="'{0:.2f}'.format((o.amount_total/1.18)*0.18)"/>
+                 <span style="margin:0;display:inline-block;" t-esc="total_bruto"/><br/>
+                 <span style="margin:8px 0 0 0;display:inline-block;" t-esc="total_igv"/><br/>
+                 <span style="margin:8px 0 0 0;display:inline-block;" t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+            </div>
+         </div> 
+    </div>      
+  </template>
+</data>
+</openerp>

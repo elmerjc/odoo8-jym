@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="takana_payment.report_payment" name="Reporte de letras de pago">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.takana_layout">
+                    <div style="font-size:0.8em;" id="report_takana" class="page">
+                        <div class="oe_structure"/>
+                        <h3 class="text-center">
+                            <span t-esc="'REPORTE DE HISTORIAL DE LETRAS'"/>
+                        </h3>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th style="width: 100px;">REGISTRO</th>
+                                    <th style="width: 210px;">PROVEEDOR</th>
+                                    <th style="width: 150px;">NUMERO</th>
+                                    <th style="width: 120px;">TOTAL</th>
+                                    <th>CUOTA</th>
+                                    <th>BANCO</th>
+                                    <th>LETRA</th>
+                                    <th style="width: 100px;">FECHA VENCIMIENTO</th>
+                                    <th style="width: 120px;">IMPORTE</th>
+                                    <th style="width: 100px;">FECHA PAGO</th>
+                                    <th>MORA</th>
+                                    <th>VENC.</th>
+                                    <th>MORA</th>
+                                    <th>COMISION</th>
+                                    <th>PROTESTO</th>
+                                    <th>NOTARIA</th>
+                                    <th>ITF</th>
+                                    <th style="width: 120px;">TOTAL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="get_data_period_expiration()" t-as="p">
+                                    <t t-set="suma_total" t-value="0"/>
+                                    <t t-set="suma_amount" t-value="0"/>
+                                    <t t-set="suma_amount_expiration" t-value="0"/>
+                                    <t t-set="suma_amount_due" t-value="0"/>
+                                    <t t-set="suma_amount_commission" t-value="0"/>
+                                    <t t-set="suma_amount_protesto" t-value="0"/>
+                                    <t t-set="suma_amount_notaria" t-value="0"/>
+                                    <t t-set="suma_amount_ift" t-value="0"/>
+                                    <t t-set="suma_amount_total" t-value="0"/>
+                                    <t t-set="suma_total_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_expiration_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_due_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_commission_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_protesto_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_notaria_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_ift_dolar" t-value="0"/>
+                                    <t t-set="suma_amount_total_dolar" t-value="0"/>
+                                    <t t-foreach="get_data_letras()" t-as="data">
+                                        <t t-if="p['period_expiration'] == data['period_expiration']">
+                                            <t t-if="data['moneda'] == 'S/.'">
+                                                <t t-set="suma_total" t-value="suma_total + data['total']"/>
+                                                <t t-set="suma_amount" t-value="suma_amount + data['amount']"/>
+                                                <t t-set="suma_amount_expiration" t-value="suma_amount_expiration + data['amount_expiration']"/>
+                                                <t t-set="suma_amount_due" t-value="suma_amount_due + data['amount_due']"/>
+                                                <t t-set="suma_amount_commission" t-value="suma_amount_commission + data['amount_commission']"/>
+                                                <t t-set="suma_amount_protesto" t-value="suma_amount_protesto + data['amount_protesto']"/>
+                                                <t t-set="suma_amount_notaria" t-value="suma_amount_notaria + data['amount_notaria']"/>
+                                                <t t-set="suma_amount_ift" t-value="suma_amount_ift + data['amount_ift']"/>
+                                                <t t-set="suma_amount_total" t-value="suma_amount_total + data['amount_total']"/>
+                                            </t>
+                                            <t t-if="data['moneda'] == '$'">
+                                                <t t-set="suma_total_dolar" t-value="suma_total_dolar + data['total']"/>
+                                                <t t-set="suma_amount_dolar" t-value="suma_amount_dolar + data['amount']"/>
+                                                <t t-set="suma_amount_expiration_dolar" t-value="suma_amount_expiration_dolar + data['amount_expiration']"/>
+                                                <t t-set="suma_amount_due_dolar" t-value="suma_amount_due_dolar + data['amount_due']"/>
+                                                <t t-set="suma_amount_commission_dolar" t-value="suma_amount_commission_dolar + data['amount_commission']"/>
+                                                <t t-set="suma_amount_protesto_dolar" t-value="suma_amount_protesto_dolar + data['amount_protesto']"/>
+                                                <t t-set="suma_amount_notaria_dolar" t-value="suma_amount_notaria_dolar + data['amount_notaria']"/>
+                                                <t t-set="suma_amount_ift_dolar" t-value="suma_amount_ift_dolar + data['amount_ift']"/>
+                                                <t t-set="suma_amount_total_dolar" t-value="suma_amount_total_dolar + data['amount_total']"/>
+                                            </t>
+                                            <tr>
+                                                <td><span t-esc="data['registro']"/></td>
+                                                <td><span t-esc="data['partner']"/></td>
+                                                <td><span t-esc="data['number_invoice']"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['total'])"/></td>
+                                                <td class="text-right"><span t-esc="data['numero_cuota']"/></td>
+                                                <td><span t-esc="data['bank']"/></td>
+                                                <td class="text-right"><span t-esc="data['letra']"/></td>
+                                                <td><span t-esc="time.strftime('%d-%m-%Y',time.strptime(data['date_expiration'],'%Y-%m-%d'))"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount'])"/></td>
+                                                <td>
+                                                    <t t-if="data['date_cancel']">
+                                                        <span t-esc="time.strftime('%d-%m-%Y',time.strptime(data['date_cancel'],'%Y-%m-%d'))"/>
+                                                    </t>
+                                                </td>
+                                                <td class="text-right"><span t-esc="data['days_due']"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_expiration'])"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_due'])"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_commission'])"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_protesto'])"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_notaria'])"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_ift'])"/></td>
+                                                <td class="text-right"><span t-esc="data['moneda']+' '+'{0:,}'.format(data['amount_total'])"/></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <tr style="font-weight: bold;">
+                                        <td colspan="3"></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_total)"/></td>
+                                        <td colspan="4"></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount)"/></td>
+                                        <td colspan="2"></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_expiration)"/></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_due)"/></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_commission)"/></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_protesto)"/></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_notaria)"/></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_ift)"/></td>
+                                        <td class="text-right"><t t-esc="'S/.' + ' ' + '{0:,}'.format(suma_amount_total)"/></td>
+                                    </tr>
+                                    <tr style="font-weight: bold;">
+                                        <td colspan="3"></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_total_dolar)"/></td>
+                                        <td colspan="4"></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_dolar)"/></td>
+                                        <td colspan="2"></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_expiration_dolar)"/></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_due_dolar)"/></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_commission_dolar)"/></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_protesto_dolar)"/></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_notaria_dolar)"/></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_ift_dolar)"/></td>
+                                        <td class="text-right"><t t-esc="'$' + ' ' + '{0:,}'.format(suma_amount_total_dolar)"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfooter> 
+                            </tfooter>
+                        </table>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

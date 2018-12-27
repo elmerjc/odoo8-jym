@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      <menuitem id="takana_invoice_menu"  name="Facturas" sequence="10" />
+      <menuitem id="takana_invoice_setting_view"  name="Configuración" parent="takana_invoice_menu"/>
+
+      <record id="action_takana_setting_currency" model="ir.actions.act_window">
+        <field name="name">Monedas</field>
+        <field name="res_model">res.currency</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+
+      <menuitem id="takana_setting_currency_action"  name="Monedas" parent="takana_invoice_setting_view" action="action_takana_setting_currency" />
+
+      
+    </data>
+</openerp>

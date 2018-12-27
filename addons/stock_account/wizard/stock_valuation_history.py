@@ -111,9 +111,6 @@ class stock_history(osv.osv):
         'price_unit_on_quant': fields.float('Value', group_operator='avg'),
         'inventory_value': fields.function(_get_inventory_value, string="Inventory Value", type='float', readonly=True),
         'source': fields.char('Source'),
-        'x_container': fields.char('Container'),
-        'x_recibo': fields.char('Recibo'),
-        'x_item': fields.char('Item'),
     }
 
     def init(self, cr):
@@ -129,10 +126,7 @@ class stock_history(osv.osv):
                 SUM(quantity) as quantity,
                 date,
                 COALESCE(SUM(price_unit_on_quant * quantity) / NULLIF(SUM(quantity), 0), 0) as price_unit_on_quant,
-                source,
-                x_recibo,
-                x_container,
-                x_item
+                source
                 FROM
                 ((SELECT
                     stock_move.id AS id,
@@ -144,10 +138,7 @@ class stock_history(osv.osv):
                     quant.qty AS quantity,
                     stock_move.date AS date,
                     quant.cost as price_unit_on_quant,
-                    stock_move.origin AS source,
-                    product_template.x_recibo,
-                    product_template.x_item,
-                    product_template.x_container
+                    stock_move.origin AS source
                 FROM
                     stock_move
                 JOIN
@@ -178,10 +169,7 @@ class stock_history(osv.osv):
                     - quant.qty AS quantity,
                     stock_move.date AS date,
                     quant.cost as price_unit_on_quant,
-                    stock_move.origin AS source,
-                    product_template.x_recibo,
-                    product_template.x_item,
-                    product_template.x_container
+                    stock_move.origin AS source
                 FROM
                     stock_move
                 JOIN
@@ -203,5 +191,5 @@ class stock_history(osv.osv):
                     dest_location.usage not in ('internal', 'transit'))
                 ))
                 AS foo
-                GROUP BY move_id, location_id, company_id, product_id, product_categ_id, date, source, x_recibo, x_item, x_container
+                GROUP BY move_id, location_id, company_id, product_id, product_categ_id, date, source
             )""")

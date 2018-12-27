@@ -180,7 +180,7 @@ class configmanager(object):
                          help="specify the private key file for the SSL connection")
         parser.add_option_group(group)
 
-        # WEB
+        # WEB my_default='.*'
         group = optparse.OptionGroup(parser, "Web interface Configuration")
         group.add_option("--db-filter", dest="dbfilter", my_default='.*',
                          help="Filter listed database", metavar="REGEXP")

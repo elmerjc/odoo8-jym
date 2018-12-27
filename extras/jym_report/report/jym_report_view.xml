@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="view_jym_report_graph" model="ir.ui.view">
+         <field name="name">jym.report.graph</field>
+         <field name="model">jym.report</field>
+         <field name="arch" type="xml">
+             <graph string="Reporte de Comprobantes" type="pivot">
+                 <field name="partner_id" type="row"/>
+                 <field name="period_id" type="col"/>
+                 <field name="amount_total" type="measure"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="view_jym_report_search" model="ir.ui.view">
+        <field name="name">jym.report.search</field>
+        <field name="model">jym.report</field>
+        <field name="arch" type="xml">
+            <search string="Reporte de Comprobantes">
+                <field name="date_invoice"/>
+                <filter string="Este Periodo Anual" name="thisyear" domain="['|', ('date_invoice', '=', False), '&amp;',('date_invoice','&lt;=', time.strftime('%%Y-12-31')),('date_invoice','&gt;=',time.strftime('%%Y-01-01'))]" help="Diario de comprobantes de este periodo anual"/>
+                <separator/>
+                <filter string="Facturas" name="current" domain="[('state','not in', ('draft','cancel','proforma','proforma2'))]"/>
+                <separator/>
+                <filter string="Cliente" name="customer" domain="['|', ('type','=','out_invoice'),('type','=','out_refund')]"/>
+                <separator/>
+                <field name="partner_id" operator="child_of"/>
+                <field name="user_id" />
+                <group expand="1" string="Group By">
+                    <filter string="Cliente" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Responsable" name='user' context="{'group_by':'user_id'}"/>
+                    <filter string="Estado" context="{'group_by':'state'}"/>
+                    <filter string="Empresa" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    <separator orientation="vertical" />
+                    <filter string="Periodo" context="{'group_by':'period_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_jym_report_all" model="ir.actions.act_window">
+        <field name="name">JyM Comprobantes</field>
+        <field name="res_model">jym.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph</field>
+        <field name="context">{'search_default_current':1, 'search_default_customer':1, 'group_by':[], 'group_by_no_leaf':1, 'search_default_year': 1}</field>
+        <field name="search_view_id" ref="view_jym_report_search"/>
+        <field name="help">Reporte de los comprobates</field>
+
+    </record>
+
+    <menuitem action="action_jym_report_all" id="menu_action_jym_report_all" parent="account.menu_finance_reporting" sequence="0"/>
+
+</data>
+</openerp>

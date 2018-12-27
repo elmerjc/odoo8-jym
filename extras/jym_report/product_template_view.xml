@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <record id="view_product_template_verificar_stock" model="ir.ui.view">
+        <field name="name">product.template.verificar.stock</field>
+        <field name="model">product.template</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='active']" position="before">
+                    <field name="verificar_stock"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    </data>
+</openerp>

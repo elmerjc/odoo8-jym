@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      <report
+          id="action_librana_factura"
+          model="sale.order"
+          string="Factura"
+          report_type="qweb-pdf"
+          name="sale.librana_factura"
+          attachment_use="False"
+          file="sale.librana_factura"
+      />
+
+      <record id="sale.action_librana_factura" model="ir.actions.report.xml">
+      </record>
+
+    </data>
+</openerp>

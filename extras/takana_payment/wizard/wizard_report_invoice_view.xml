@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_wizard_report_invoice" model="ir.ui.view">
+            <field name="name">Reporte de facturas por proveedor</field>
+            <field name="model">wizard.report.invoice</field>
+            <field name="arch" type="xml">
+                <form>
+                    <p class="oe_gray">
+                        Si no selecciona un proveedor, tomara en cuenta a todos
+                    </p>
+                    <group>
+                        <field name="partner_id" domain="[('supplier','=',True)]" options="{'no_create_edit': True}"/>
+                    </group>
+                    <p class="oe_gray">
+                        Elegir el rango de fecha
+                    </p>
+                    <group>
+                        <field name="date_inicio"/>
+                        <field name="date_fin"/>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Generar reporte" type="object"  class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wizard_report_invoice">
+            <field name="name">Reporte de facturas</field>
+            <field name="res_model">wizard.report.invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_report_invoice"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem 
+            id="menu_action_wizard_report_invoice" 
+            action="action_wizard_report_invoice" 
+            parent="takana_invoice_report_menu" 
+            groups="takana_payment.group_takana_manager" 
+            sequence="2"/>
+
+        <record id="view_wizard_report_invoice_analysis" model="ir.ui.view">
+            <field name="name">Análisis de facturas</field>
+            <field name="model">wizard.report.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Elegir el rango de fecha">
+                    <p class="oe_gray">
+                        Elegir el rango de fecha
+                    </p>
+                    <group>
+                        <field name="date_inicio"/>
+                        <field name="date_fin"/>
+                    </group>
+                    <footer>
+                        <button name="view_report" string="Generar" type="object"  class="oe_highlight"  />
+                        o
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_report_invoice_analysis" model="ir.actions.act_window">
+            <field name="name">Análisis de facturas</field>
+            <field name="res_model">wizard.report.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wizard_report_invoice_analysis"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="menu_action_wizard_report_invoice_analysis"
+            action="action_wizard_report_invoice_analysis"
+            parent="takana_invoice_report_menu"
+            sequence="3"/>
+
+    </data>
+</openerp>
+

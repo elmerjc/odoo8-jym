@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="takana_payment.report_invoice" name="Reporte de facturas de proveedor">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.takana_layout">
+                    <div id="report_takana" class="page">
+                        <div class="oe_structure"/>
+                        <h3 class="text-center">
+                            <span t-esc="'REPORTE DE FACTURAS'"/>
+                        </h3>
+                        <div style="height:40px;"></div>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th style="width: 90px;">REGISTRO</th>
+                                    <th style="width: 100px;">FECHA EMISION</th>
+                                    <th style="width: 100px;">FECHA VENCIMIENTO</th>
+                                    <th style="width: 120px;">NUMERO</th>
+                                    <th>PROVEEDOR</th>
+                                    <th>RUC</th>
+                                    <th>TOTAL BRUTO</th>
+                                    <th>IMPUESTO</th>
+                                    <th>TOTAL NETO</th>
+                                    <th>CONDICION PAGO</th>
+                                    <th>SALDO</th>
+                                    <th>ESTADO</th>
+                                    <th>OBS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="get_data_invoices()">
+                                    <t t-set="suma_total" t-value="0"/>
+                                    <t t-set="suma_total_untaxed" t-value="0"/>
+                                    <t t-set="suma_total_tax" t-value="0"/>
+                                    <tr t-foreach="get_data_invoices()" t-as="inv">                                       
+                                        <t t-set="suma_total" t-value="suma_total + inv['amount_total']"/>
+                                        <t t-set="suma_total_untaxed" t-value="suma_total_untaxed + inv['amount_untaxed']"/>
+                                        <t t-set="suma_total_tax" t-value="suma_total_tax + inv['amount_tax']"/>
+                                        <td><span t-esc="inv['name']"/></td>
+                                        <td><span t-esc="time.strftime('%d-%m-%Y',time.strptime(inv['date_invoice'],'%Y-%m-%d'))"/></td>
+                                        <td>
+                                            <t t-if="inv['date_expiration']">
+                                                <span t-esc="time.strftime('%d-%m-%Y',time.strptime(inv['date_expiration'],'%Y-%m-%d'))"/>
+                                            </t>
+                                        </td>
+                                        <td class="text-right"><span t-esc="inv['number_invoice']"/></td>
+                                        <td>
+                                        <t t-if="get_data_guias(inv['id'])">
+                                            <t t-foreach="get_data_guias(inv['id'])" t-as="i">
+                                                <span t-esc="i['number_guia']"/><t t-esc="','"/>
+                                            </t>
+                                        </t>
+                                        </td>
+                                        <td><span t-esc="inv['partner']"/></td>
+                                        <td><span t-esc="inv['x_ruc']"/></td>
+                                        <td class="text-right"><span t-esc="'{0:,}'.format(inv['amount_untaxed'])"/></td>
+                                        <td class="text-right"><span t-esc="'{0:,}'.format(inv['amount_tax'])"/></td>
+                                        <td class="text-right"><span t-esc="'{0:,}'.format(inv['amount_total'])"/></td>
+                                        <td><span t-esc="inv['payment_term']"/></td>
+                                        <td class="text-right"><span t-esc="inv['residual']"/></td>
+                                        <td><span t-esc="selection_value('takana.invoice','state', inv['state'])"/></td>
+                                        <td><span t-esc="inv['comment']"/></td>
+                                    </tr> 
+                                </t>
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td colspan="6"></td>
+                                    <td class="text-right"><t t-esc="'{0:,}'.format(suma_total_untaxed)"/></td>
+                                    <td class="text-right"><t t-esc="'{0:,}'.format(suma_total_tax)"/></td>
+                                    <td class="text-right"><t t-esc="'{0:,}'.format(suma_total)"/></td>
+                                    <td colspan="4"></td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</data>
+</openerp>

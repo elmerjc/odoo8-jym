@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_takana_report_payment_graph">
+            <field name="name">report.payment.graph</field>
+            <field name="model">report.payment</field>
+            <field name="arch" type="xml">
+                <graph string="Letras de pago" type="pivot">
+                    <field name="partner_id" type="row"/>
+                    <field name="letra" type="row"/>
+                    <field name="date_cancel" type="col"/>
+                    <field name="amount" operator="+"/>
+                    <field name="days_due" operator="+"/>
+                </graph>
+            </field>
+          </record>
+    </data>
+</openerp>

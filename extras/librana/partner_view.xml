@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <record id="res_partner_view_codigo_cliente" model="ir.ui.view">
+        <field name="name">res.partner.view.codigo.cliente</field>
+        <field name="model">res.partner</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='website']" position="before">
+                    <field name="codigo_cliente" attrs="{'invisible': [('customer','=', True)]}"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    </data>
+</openerp>

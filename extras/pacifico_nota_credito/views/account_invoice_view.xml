@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_invoice_nc_form">
+            <field name="name">account.invoice.nc.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fiscal_position']" position="after">
+                    <field name="invoice_nc_id" attrs="{'invisible':[('type','!=','out_refund')]}"/>
+                    <field name="catalog_09_id" attrs="{'invisible':[('type','!=','out_refund')]}"/>
+                    <field name="motivo_nc" attrs="{'invisible':[('type','!=','out_refund')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

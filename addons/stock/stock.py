@@ -2878,7 +2878,7 @@ class stock_inventory(osv.osv):
 class stock_inventory_line(osv.osv):
     _name = "stock.inventory.line"
     _description = "Inventory Line"
-    _order = "inventory_id, location_name, product_recibo, product_item, product_code, product_name, prodlot_name"
+    _order = "inventory_id, location_name, product_code, product_name, prodlot_name"
 
     def _get_product_name_change(self, cr, uid, ids, context=None):
         return self.pool.get('stock.inventory.line').search(cr, uid, [('product_id', 'in', ids)], context=context)
@@ -2928,12 +2928,6 @@ class stock_inventory_line(osv.osv):
         'prodlot_name': fields.related('prod_lot_id', 'name', type='char', string='Serial Number Name', store={
                                                                                             'stock.production.lot': (_get_prodlot_change, ['name'], 20),
                                                                                             'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['prod_lot_id'], 20),}),
-        'product_recibo': fields.related('product_id', 'x_recibo', type='char', string='Recibo', store={
-                                                                                            'product.product': (_get_product_name_change, ['name', 'x_recibo'], 20),
-                                                                                            'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 20),}),
-        'product_item': fields.related('product_id', 'x_item', type='char', string='Item', store={
-                                                                                            'product.product': (_get_product_name_change, ['name', 'x_item'], 20),
-                                                                                            'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 20),}),
     }
 
     _defaults = {

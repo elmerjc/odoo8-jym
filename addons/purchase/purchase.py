@@ -811,10 +811,6 @@ class purchase_order(osv.osv):
             'route_ids': order.picking_type_id.warehouse_id and [(6, 0, [x.id for x in order.picking_type_id.warehouse_id.route_ids])] or [],
             'warehouse_id':order.picking_type_id.warehouse_id.id,
             'invoice_state': order.invoice_method == 'picking' and '2binvoiced' or 'none',
-            'x_declaracion': order_line.x_declaracion,
-            'x_container': order_line.x_container,
-            'x_recibo': order_line.x_recibo,
-            'x_item': order_line.x_item,
         }
 
         diff_quantity = order_line.product_qty
@@ -1131,10 +1127,6 @@ class purchase_order_line(osv.osv):
         'partner_id': fields.related('order_id', 'partner_id', string='Partner', readonly=True, type="many2one", relation="res.partner", store=True),
         'date_order': fields.related('order_id', 'date_order', string='Order Date', readonly=True, type="datetime"),
         'procurement_ids': fields.one2many('procurement.order', 'purchase_line_id', string='Associated procurements'),
-        'x_declaracion' : fields.char('Declaracion'),
-        'x_container' : fields.char('Container'),
-        'x_recibo' : fields.char('Recibo'),
-        'x_item' : fields.char('Item'),
     }
     _defaults = {
         'product_uom' : _get_uom_id,
@@ -1210,12 +1202,7 @@ class purchase_order_line(osv.osv):
         if context is None:
             context = {}
 
-        x_contanier = ''
-        x_recibo = ''
-        x_declaracion = ''
-        x_item = ''
-
-        res = {'value': {'price_unit': price_unit or 0.0, 'name': name or '', 'product_uom' : uom_id or False, 'x_container' : x_contanier or '', 'x_recibo' : x_recibo or '', 'x_declaracion' : x_declaracion or '', 'x_item' : x_item or ''}}
+        res = {'value': {'price_unit': price_unit or 0.0, 'name': name or '', 'product_uom' : uom_id or False}}
         if not product_id:
             if not uom_id:
                 uom_id = self.default_get(cr, uid, ['product_uom'], context=context).get('product_uom', False)
@@ -1306,11 +1293,6 @@ class purchase_order_line(osv.osv):
         taxes_ids = account_fiscal_position.map_tax(cr, uid, fpos, taxes, context=context)
         price = self.pool['account.tax']._fix_tax_included_price(cr, uid, price, product.supplier_taxes_id, taxes_ids)
         res['value'].update({'price_unit': price, 'taxes_id': taxes_ids})
-
-        res['value'].update({'x_container': product.x_container})
-        res['value'].update({'x_recibo': product.x_recibo})
-        res['value'].update({'x_item': product.x_item})
-        res['value'].update({'x_declaracion': product.x_declaracion})
         
         return res
 

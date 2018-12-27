@@ -51,9 +51,6 @@ class sale_report(osv.osv):
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist', readonly=True),
         'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account', readonly=True),
         'section_id': fields.many2one('crm.case.section', 'Sales Team'),
-        'x_container': fields.char('Container'),
-        'x_modelo': fields.char('Modelo'),
-        'x_recibo': fields.char('Recibo'),
     }
     _order = 'date desc'
 
@@ -84,10 +81,7 @@ class sale_report(osv.osv):
                     t.categ_id as categ_id,
                     s.pricelist_id as pricelist_id,
                     s.project_id as analytic_account_id,
-                    s.section_id as section_id,
-                    l.x_recibo,
-                    l.x_container,
-                    l.x_item
+                    s.section_id as section_id
         """
         return select_str
 
@@ -120,10 +114,7 @@ class sale_report(osv.osv):
                     l.state,
                     s.pricelist_id,
                     s.project_id,
-                    s.section_id,
-                    l.x_recibo,
-                    l.x_container,
-                    l.x_item
+                    s.section_id
         """
         return group_by_str
 

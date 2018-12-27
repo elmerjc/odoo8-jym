@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem id="preventa_menu"  name="Pre Venta" sequence="21" />
+
+        <menuitem id="preventa_visita_view"  name="Visitas Tecnicas" parent="preventa_menu"/>
+        
+        <record model="ir.actions.act_window" id="list_visita_action">
+            <field name="name">Visitas Tecnicas</field>
+            <field name="res_model">preventa.visita</field>
+            <field name="view_mode">tree,form,graph</field>
+        </record>
+
+        <menuitem id="preventa_visita_action"  name="Visitas Tecnicas" parent="preventa_visita_view" action="list_visita_action" />
+        
+
+        <record id="preventa_visita_search_view" model="ir.ui.view">
+            <field name="name">view.preventa.visita.search</field>
+            <field name="model">preventa.visita</field>
+            <field name="arch" type="xml">
+                <search string="Visitas Tecnicas">
+                    <field name="name" string="Visita #" filter_domain="['|',('name','=',self),'|',('partner_id','ilike',self)]"/>
+                    <separator/>
+                    <group  expand='0' string='Agrupar por'>
+                       <filter string='Estado' domain="[]" context="{'group_by' : 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_preventa_visita_tree">
+            <field name="name">view.preventa.visita.tree</field>
+            <field name="model">preventa.visita</field>
+            <field name="arch" type="xml">
+                <tree string="Visitas Tecnicas" colors="red:state=='cancel';grey:state=='cancelado';">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="date_confirm"/>
+                    <field name="responsable_id"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_preventa_visita_form">
+            <field name='name'>view.preventa.visita.form</field>
+            <field name="model">preventa.visita</field>
+            <field name="arch" type="xml">
+                <form string="Registro de la Visita Tecnica">
+                    <header>
+                      <button name="action_pendiente" states="cancel,done" string="Pendiente" type="object" class="oe_highlight"/>
+                      <button name="action_cancel" states="pending,done" string="Cancelar" type="object" class="oe_highlight"/>
+                      <button name="action_done" states="pending" string="Finalizar" type="object"/>
+                      <button name="action_done" string="Crear Proforma"
+                            type="action" class="oe_highlight"/>
+                      <field name="state" widget="statusbar" statusbar_visible="pending,cancel,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                          <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="date_confirm"/>
+                            <field name="responsable_id"/>
+                          </group>
+                        </group>
+                        <notebook>
+                            <page string="Datos del cliente">
+                              <group>
+                                <group>
+                                  <field name="partner_id" domain="[('customer','=',True)]"/>
+                                  <field t-if="partner_id" name="partner_address"/>
+                                </group>
+                              </group>
+                              <group>
+                                <group>
+                                  <field name="note"/>
+                                </group>
+                              </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Responsable -->
+        <record id="preventa_responsable_form_view" model="ir.ui.view">
+            <field name="name">preventa.responsable.form</field>
+            <field name="model">preventa.responsable</field>
+            <field name="arch" type="xml">
+                <form string="Responsables">
+                  <group>
+                      <field name="name"/>
+                      <field name="celular"/>
+                  </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="preventa_responsable_tree_view" model="ir.ui.view">
+            <field name="name">preventa.responsable.tree</field>
+            <field name="model">preventa.responsable</field>
+            <field name="arch" type="xml">
+                <tree string="Responsables">
+                    <field name="name"/>
+                    <field name="celular"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

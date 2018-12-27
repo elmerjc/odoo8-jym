@@ -603,11 +603,10 @@ class product_template(osv.osv):
         # related to display product product information if is_product_variant
         'ean13': fields.related('product_variant_ids', 'ean13', type='char', string='EAN13 Barcode'),
         'default_code': fields.related('product_variant_ids', 'default_code', type='char', string='Internal Reference'),
-        'x_declaracion': fields.char('Declaracion de Ingreso'),
-        'x_container': fields.char('Container'),
-        'x_recibo': fields.char('Recibo'),
-        'x_item': fields.char('Item'),
-        'x_modelo': fields.char('Modelo'),
+        #'x_declaracion': fields.char('Declaracion'),
+        #'x_container': fields.char('Container'),
+        #'x_recibo': fields.char('Recibo'),
+        #'x_item': fields.char('Item'),
     }
 
     def _price_get_list_price(self, product):
@@ -1085,14 +1084,8 @@ class product_product(osv.osv):
         def _name_get(d):
             name = d.get('name','')
             code = context.get('display_default_code', True) and d.get('default_code',False) or False
-            recibo = d.get('x_recibo','') or ''
-            item = d.get('x_item','') or ''
-            modelo = d.get('x_modelo','') or ''
-            ide = recibo
-            if recibo and item:
-                ide = ' %s/%s'  % (recibo,item)
             if code:
-                name = '[%s]%s %s' % (code,name,ide)
+                name = '[%s]%s' % (code,name)
             return (d['id'], name)
 
         partner_id = context.get('partner_id', False)
@@ -1122,9 +1115,6 @@ class product_product(osv.osv):
                               'id': product.id,
                               'name': seller_variant or name,
                               'default_code': s.product_code or product.default_code,
-                              'x_recibo': product.x_recibo,
-                              'x_item': product.x_item,
-                              'x_modelo': product.x_modelo,
                               }
                     result.append(_name_get(mydict))
             else:
@@ -1132,9 +1122,6 @@ class product_product(osv.osv):
                           'id': product.id,
                           'name': name,
                           'default_code': product.default_code,
-                          'x_recibo': product.x_recibo,
-                          'x_item': product.x_item,
-                          'x_modelo': product.x_modelo,
                           }
                 result.append(_name_get(mydict))
         return result

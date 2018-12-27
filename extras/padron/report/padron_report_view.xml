@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="view_padron_report_graph" model="ir.ui.view">
+         <field name="name">padron.report.graph</field>
+         <field name="model">padron.report</field>
+         <field name="arch" type="xml">
+             <graph string="Reportes del Padron" type="pie">
+              <field name="lugar_trabajo" type="row"/>
+              <field name="tipo_trabajador"/>
+            </graph>
+         </field>
+    </record>
+
+    <record id="view_padron_report_search" model="ir.ui.view">
+        <field name="name">padron.report.search</field>
+        <field name="model">padron.report</field>
+        <field name="arch" type="xml">
+            <search string="Reportes del Padron">
+                <field name="registro"/>
+                <field name="dni"/>
+                <field name="name"/>
+                <filter string="Edad 20 a 55" name="edad" domain="[('edad','&gt;=',20),('edad','&lt;=',55)]"/>
+                <filter string="Edad 56 a 65" name="edad" domain="[('edad','&gt;=',56),('edad','&lt;=',65)]"/>
+                <filter string="Retirados" name="estado" domain="[('estado','=',('retirado'))]"/>
+                <filter string="Activos" name="estado" domain="[('estado','=',('activo'))]"/>
+                <filter string="Finalizados" name="estado" domain="[('estado','=',('finalizado'))]"/>
+                <group expand="1" string="Agrupar por">
+                    <filter string="Grado de Instrucción" context="{'group_by':'grado_instruccion'}"/>
+                    <filter string="Tipo de trabajador" context="{'group_by':'tipo_trabajador'}"/>
+                    <filter string="Sistema de Pensión" context="{'group_by':'sistema_pension'}"/>
+                    <filter string="Estado de afiliación" context="{'group_by':'estado'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_padron_report_all" model="ir.actions.act_window">
+        <field name="name">Reportes</field>
+        <field name="res_model">padron.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph</field>
+        <field name="search_view_id" ref="view_padron_report_search"/>
+        <field name="view_id" ref="view_padron_report_graph"/>
+        <field name="help">Este reporte analiza los datos de los miembros del sindicato</field>
+    </record>
+    
+    <menuitem id="padron_report_view"  name="Reportes" parent="padron_menu"/>
+    <menuitem id="padron_report_action"  name="Reportes" parent="padron_report_view" action="action_padron_report_all" sequence="10"/>
+
+</data>
+</openerp>

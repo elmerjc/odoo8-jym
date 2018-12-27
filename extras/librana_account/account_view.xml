@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="action_invoice_001_view" model="ir.actions.act_window">
+            <field name="name">Facturas 001</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), ('journal_id','=', 1)]</field>
+            <field name="context">{'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas de la serie 001
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_001_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_invoice_001_view"/>
+        </record>
+
+        <record id="action_invoice_001_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_001_view"/>
+        </record>
+        
+        <menuitem action="action_invoice_001_view" id="menu_action_invoice_001_view" parent="account.menu_finance_receivables" sequence="3"/>
+
+        <record id="action_invoice_002_view" model="ir.actions.act_window">
+            <field name="name">Facturas 002</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), ('journal_id','=', 10)]</field>
+            <field name="context">{'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas de la serie 002
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_002_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_invoice_002_view"/>
+        </record>
+
+        <record id="action_invoice_002_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_002_view"/>
+        </record>
+
+        <menuitem action="action_invoice_002_view" id="menu_action_invoice_002_view" parent="account.menu_finance_receivables" sequence="4"/>
+
+        <record id="action_invoice_003_view" model="ir.actions.act_window">
+            <field name="name">Facturas 003</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), ('journal_id','=', 11)]</field>
+            <field name="context">{'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas de la serie 003
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_003_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_invoice_003_view"/>
+        </record>
+
+        <record id="action_invoice_003_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_003_view"/>
+        </record>
+
+        <menuitem action="action_invoice_003_view" id="menu_action_invoice_003_view" parent="account.menu_finance_receivables" sequence="5"/>
+
+        <record id="action_invoice_004_view" model="ir.actions.act_window">
+            <field name="name">Facturas 004</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), ('journal_id','=', 12)]</field>
+            <field name="context">{'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas de la serie 004
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_004_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_invoice_004_view"/>
+        </record>
+
+        <record id="action_invoice_004_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_004_view"/>
+        </record>
+
+        <menuitem action="action_invoice_004_view" id="menu_action_invoice_004_view" parent="account.menu_finance_receivables" sequence="6"/>
+
+        <record id="action_invoice_005_view" model="ir.actions.act_window">
+            <field name="name">Facturas 005</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'), ('state','!=','cancel'), ('journal_id','=', 13)]</field>
+            <field name="context">{'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas de la serie 005
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_005_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_invoice_005_view"/>
+        </record>
+
+        <record id="action_invoice_005_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_005_view"/>
+        </record>
+
+        <menuitem action="action_invoice_005_view" id="menu_action_invoice_005_view" parent="account.menu_finance_receivables" sequence="7"/>
+
+        <record id="action_invoice_anuladas_view" model="ir.actions.act_window">
+            <field name="name">Facturas anuladas</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="domain">[('type','=','out_invoice'), ('state','=','cancel')]</field>
+            <field name="context">{'default_type': 'out_invoice', 'type': 'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Facturas anuladas
+              </p>
+            </field>
+        </record>
+
+        <record id="action_invoice_anuladas_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_invoice_anuladas_view"/>
+        </record>
+
+        <record id="action_invoice_anuladas_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_invoice_anuladas_view"/>
+        </record>
+
+        <menuitem action="action_invoice_anuladas_view" id="menu_action_invoice_anuladas_view" parent="account.menu_finance_receivables" sequence="8"/>
+    </data>
+</openerp>

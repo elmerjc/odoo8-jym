@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_preventa_make_quotation" model="ir.ui.view">
+            <field name="name">Crear Proforma</field>
+            <field name="model">preventa.make.quotation</field>
+            <field name="arch" type="xml">
+                <form string="Generacion de Proforma">
+                    <p class="oe_grey">
+                        Seleccionar la lista de precios
+                    </p>
+                    <group>
+                        <field name="pricelist_id"/>
+                    </group>
+                    <footer>
+                        <button name="create_quotation" string="Crear Proforma" type="object"
+                            context="{'open_quotation': True}" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_preventa_make_quotation" model="ir.actions.act_window">
+            <field name="name">Crear Proforma</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">preventa.make.quotation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

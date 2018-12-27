@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+  <template id="report.proforma_layout">
+    <t t-call="report.proforma_layout_header"/>
+    <t t-raw="0"/>
+    <t t-call="report.proforma_layout_footer"/>
+  </template>
+
+  <template id="report.proforma_layout_header">
+    <div class="header">
+           <div class="row">
+                 <div class="col-xs-3">
+                       <img t-att-src="'data:image/png;base64,'+ o.company_id.logo" height="150px" width="200px"/>
+                 </div>
+                 <div class="col-xs-9">
+                       <div style="color:#0033cc;">
+                            <span style="font-size: 17px;"><strong>J&amp;M SOLUCIONES</strong></span><br/>
+                            <span style="font-size: 15px;" t-field="o.company_id.street"/><br/>
+                            <span style="font-size: 15px;">Telefono: </span><span style="font-size: 15px;padding-right:40px;" t-field="o.company_id.phone"/> Email: <span t-field="o.company_id.email"/>
+                       </div>
+                       <div style="border-top: 1px solid black;"/>
+                       <div style="font-size: 17px;">
+                            <div class="row">
+                               <div class="col-xs-5"><strong>Fecha:</strong> <br/><span t-if="o.date_order" t-field="o.date_order"/></div>
+                               <div class="col-xs-4"><strong>Vendedor:</strong> <br/><span t-field="o.user_id.name"/></div>
+                               <div t-if="o.payment_term" class="col-xs-3"><strong>Pago:</strong> <br/><span t-field="o.payment_term"/></div>
+                            </div>
+                       </div>
+                 </div>
+            </div>
+    </div>
+  </template>
+
+  <template id="report.proforma_layout_footer">
+  	    <div class="footer">
+	        <div class="text-center" style="border-top: 1px solid black;">
+	            <ul class="list-inline">
+	                <li t-if="o.company_id.phone">Telefono: <span t-field="o.company_id.phone"/></li>
+
+	                <li t-if="o.company_id.fax and o.company_id.phone">&amp;bull;</li>
+	                <li t-if="o.company_id.fax">Fax: <span t-field="o.company_id.fax"/></li>
+
+	                <li t-if="o.company_id.email">&amp;bull;</li>
+	                <li t-if="o.company_id.email">Email: <span t-field="o.company_id.email"/></li>
+
+	                <li t-if="o.company_id.website">&amp;bull;</li>
+	                <li t-if="o.company_id.website">Pagina web: <span t-field="o.company_id.website"/></li>
+	            </ul>
+
+	            <ul class="list-inline">
+	                <li>Pagina:</li>
+	                <li><span class="page"/></li>
+	                <li>/</li>
+	                <li><span class="topage"/></li>
+	            </ul>
+	        </div>
+	    </div>            
+  </template>
+</data>
+</openerp>
